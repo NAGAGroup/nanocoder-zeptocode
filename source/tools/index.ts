@@ -1,5 +1,6 @@
 import {agentTool} from '@/tools/agent-tool';
 import {askQuestionTool} from '@/tools/ask-question';
+import {dagToolExports} from '@/tools/dag';
 import {executeBashTool} from '@/tools/execute-bash';
 import {fetchUrlTool} from '@/tools/fetch-url';
 import {getFileOpTools} from '@/tools/file-ops';
@@ -53,4 +54,5 @@ const conditionalTools: NanocoderToolExport[] = [...getGitTools()];
 export const allToolExports: NanocoderToolExport[] = [
 	...staticTools,
 	...conditionalTools,
+	...dagToolExports,
 ];

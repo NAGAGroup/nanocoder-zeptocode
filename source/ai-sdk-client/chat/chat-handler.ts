@@ -7,6 +7,7 @@ import {
 	ToolCallRepairError,
 } from 'ai';
 import {MAX_TOOL_STEPS} from '@/constants';
+import {createDagPrepareStepHandler} from '@/tools/dag/dag-prepare-step';
 import type {
 	AIProviderConfig,
 	AISDKCoreTool,
@@ -33,10 +34,7 @@ import {convertAISDKToolCalls} from '../converters/tool-converter.js';
 import {extractRootError} from '../error-handling/error-extractor.js';
 import {parseAPIError} from '../error-handling/error-parser.js';
 import {isToolSupportError} from '../error-handling/tool-error-detector.js';
-import {
-	createOnStepFinishHandler,
-	createPrepareStepHandler,
-} from './streaming-handler.js';
+import {createOnStepFinishHandler} from './streaming-handler.js';
 
 export interface ChatHandlerParams {
 	model: LanguageModel;
@@ -121,6 +119,9 @@ export async function handleChat(
 			// XML tool definitions are already included in the system prompt
 			// when native tools are disabled (handled upstream in useChatHandler).
 
+			// Get tool names for DAG enforcement (or empty array if tools disabled)
+			const allToolNames = aiTools ? Object.keys(aiTools) : [];
+
 			// Convert messages to AI SDK v5 ModelMessage format
 			const modelMessages = convertToModelMessages(messages);
 
@@ -158,7 +159,7 @@ export async function handleChat(
 				maxRetries,
 				stopWhen: stepCountIs(MAX_TOOL_STEPS),
 				onStepFinish: createOnStepFinishHandler(callbacks),
-				prepareStep: createPrepareStepHandler(),
+				prepareStep: createDagPrepareStepHandler(allToolNames),
 				onError: ({error}) => {
 					// Catch streaming errors so raw SSE events don't leak to stdout.
 					// The error will still be thrown by the stream and caught by

@@ -20,6 +20,10 @@ import {setToolManagerGetter, setToolRegistryGetter} from '@/message-handler';
 import {SubagentExecutor} from '@/subagents/subagent-executor';
 import {getSubagentLoader} from '@/subagents/subagent-loader';
 import {setAgentToolExecutor, setAvailableAgentNames} from '@/tools/agent-tool';
+import {
+	cleanupOrphanedPidDirs,
+	registerDagStateCleanup,
+} from '@/tools/dag/path-utils';
 import {clearAllTasks} from '@/tools/tasks';
 import {ToolManager} from '@/tools/tool-manager';
 import type {CustomCommand} from '@/types/commands';
@@ -380,6 +384,12 @@ export function useAppInitialization({
 
 			// Clear task list — fire-and-forget, just deletes a JSON file
 			void clearAllTasks();
+
+			// Clean up orphaned PID-based DAG state directories from dead processes
+			void cleanupOrphanedPidDirs();
+
+			// Register shutdown handler for DAG state cleanup
+			registerDagStateCleanup();
 
 			const newToolManager = new ToolManager();
 			const newCustomCommandLoader = new CustomCommandLoader();

@@ -20,7 +20,7 @@ const FILENAME = 'copilot-credentials.json';
 
 /** Shared message when no Copilot credential is found (used by provider-factory and client-factory). */
 export function getCopilotNoCredentialsMessage(providerName: string): string {
-	return `No Copilot credentials for "${providerName}". Type /copilot-login in the chat to log in, or run: nanocoder copilot login (from project: node dist/cli.js copilot login)`;
+	return `No Copilot credentials for "${providerName}". Type /copilot-login in the chat to log in, or run: zeptocoder copilot login (from project: node dist/cli.js copilot login)`;
 }
 
 export interface CopilotCredential {

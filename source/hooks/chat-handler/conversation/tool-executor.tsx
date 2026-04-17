@@ -10,6 +10,9 @@ import {
 import {MAX_CONCURRENT_AGENTS} from '@/subagents/subagent-executor';
 import type {AgentToolArgs} from '@/tools/agent-tool';
 import {startAgentExecution} from '@/tools/agent-tool';
+import {exemptTools} from '@/tools/dag/constants';
+import {advanceEnforcement, readState} from '@/tools/dag/engine/state-io';
+import {getStatePath} from '@/tools/dag/path-utils';
 import type {ToolManager} from '@/tools/tool-manager';
 import type {ToolCall, ToolResult} from '@/types/core';
 import {formatError} from '@/utils/error-formatter';
@@ -19,6 +22,52 @@ import {
 	displayToolResult,
 	LIVE_TASK_TOOLS,
 } from '@/utils/tool-result-display';
+
+/**
+ * Check DAG enforcement before a tool call.
+ * Returns an error string if the tool is blocked, null if allowed.
+ */
+function checkDagEnforcement(toolName: string): string | null {
+	const statePath = getStatePath();
+	const state = readState(statePath);
+
+	if (!state || state.status !== 'running') return null;
+
+	const exempt = new Set(exemptTools);
+	if (exempt.has(toolName)) return null;
+
+	const node = state.node_map[state.current_node];
+	if (!node || node.enforcement.length === 0) return null;
+
+	const {enforcement} = node;
+	const idx = state.todo_index;
+	if (idx >= enforcement.length) return null;
+
+	const currentItem = enforcement[idx];
+	const currentToolName = currentItem.startsWith('optional:')
+		? currentItem.slice('optional:'.length)
+		: currentItem;
+
+	// Tool matches current enforcement item — allowed
+	if (toolName === currentToolName) return null;
+
+	// Current item is optional and tool doesn't match — check next mandatory
+	if (currentItem.startsWith('optional:')) {
+		for (let i = idx + 1; i < enforcement.length; i++) {
+			const item = enforcement[i];
+			const name = item.startsWith('optional:')
+				? item.slice('optional:'.length)
+				: item;
+			if (toolName === name) return null; // matches a later item
+			if (!item.startsWith('optional:')) break; // hit a mandatory item that isn't this tool
+		}
+	}
+
+	return (
+		`[DAG BLOCKED] Cannot call \`${toolName}\` — prerequisite not met.\n` +
+		`Call \`${currentToolName}\` first to continue.`
+	);
+}
 
 /**
  * Validates and executes a single tool call.
@@ -34,8 +83,24 @@ const executeOne = async (
 	validationError?: string;
 }> => {
 	try {
+		const toolName = toolCall.function.name;
+
+		// DAG enforcement — block tools not allowed at this node
+		const enforcementError = checkDagEnforcement(toolName);
+		if (enforcementError) {
+			return {
+				toolCall,
+				result: {
+					tool_call_id: toolCall.id,
+					role: 'tool' as const,
+					name: toolName,
+					content: enforcementError,
+				},
+			};
+		}
+
 		// Run validator if available
-		const validator = toolManager?.getToolValidator(toolCall.function.name);
+		const validator = toolManager?.getToolValidator(toolName);
 		if (validator) {
 			const parsedArgs = parseToolArguments(toolCall.function.arguments);
 			const validationResult = await validator(parsedArgs);
@@ -45,7 +110,7 @@ const executeOne = async (
 					result: {
 						tool_call_id: toolCall.id,
 						role: 'tool' as const,
-						name: toolCall.function.name,
+						name: toolName,
 						content: `Validation failed: ${formatError(validationResult.error)}`,
 					},
 					validationError: validationResult.error,
@@ -54,6 +119,10 @@ const executeOne = async (
 		}
 
 		const result = await processToolUse(toolCall);
+
+		// Advance DAG enforcement after successful execution
+		advanceEnforcement(getStatePath(), toolName);
+
 		return {toolCall, result};
 	} catch (error) {
 		return {
@@ -342,6 +411,10 @@ export const executeToolsDirectly = async (
 					toolCall,
 					result.content,
 				);
+				// Advance DAG enforcement after successful agent execution
+				if (!result.content.startsWith('Error:')) {
+					advanceEnforcement(getStatePath(), toolCall.function.name);
+				}
 			}
 			continue;
 		}

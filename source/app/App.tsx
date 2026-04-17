@@ -39,6 +39,7 @@ import {useToolHandler} from '@/hooks/useToolHandler';
 import {UIStateProvider} from '@/hooks/useUIState';
 import {useVSCodeServer} from '@/hooks/useVSCodeServer';
 import type {ThemePreset} from '@/types/ui';
+import {setCurrentDagSessionId} from '@/utils/dag-session-utils';
 import {
 	generateCorrelationId,
 	withNewCorrelationContext,
@@ -215,6 +216,11 @@ export default function App({
 			chatQueueFunction: 'addToChatQueue',
 		});
 	}, [appState.addToChatQueue, logger]);
+
+	// Sync DAG sessionId accessor whenever the Nanocoder session changes
+	React.useEffect(() => {
+		setCurrentDagSessionId(appState.currentSessionId);
+	}, [appState.currentSessionId]);
 
 	// Question handler - ref holds the resolver for the pending question promise
 	const questionResolverRef = React.useRef<((answer: string) => void) | null>(
