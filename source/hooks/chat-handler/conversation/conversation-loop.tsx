@@ -22,6 +22,7 @@ import {formatElapsedTime, getRandomAdjective} from '@/utils/completion-note';
 import {MessageBuilder} from '@/utils/message-builder';
 import {parseToolArguments} from '@/utils/tool-args-parser';
 import {displayCompactCountsSummary} from '@/utils/tool-result-display';
+import {drainDagPrompt} from '@/tools/dag/prompt-queue';
 import {filterValidToolCalls} from '../utils/tool-filters';
 import {executeToolsDirectly} from './tool-executor';
 
@@ -545,10 +546,21 @@ export const processAssistantResponse = async (
 					return;
 				}
 
-				// No confirmation needed - continue conversation loop
+				// No confirmation needed — check for a queued DAG prompt and inject
+				// it as a user message so it has the same weight as a real user turn.
+				const dagPrompt = drainDagPrompt();
+				let messagesForNextTurn = updatedMessagesWithTools;
+				if (dagPrompt) {
+					const dagBuilder = new MessageBuilder(updatedMessagesWithTools);
+					dagBuilder.addMessage({role: 'user', content: dagPrompt});
+					messagesForNextTurn = dagBuilder.build();
+					setMessages(messagesForNextTurn);
+				}
+
+				// Continue the conversation loop
 				await processAssistantResponse({
 					...params,
-					messages: updatedMessagesWithTools,
+					messages: messagesForNextTurn,
 					conversationStartTime: startTime,
 				});
 				return;

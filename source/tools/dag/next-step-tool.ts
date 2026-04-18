@@ -3,6 +3,7 @@ import {readDagV3} from '@/tools/dag/engine/dag-io';
 import {allRemainingOptional} from '@/tools/dag/engine/enforcement-utils';
 import {now, readState, writeState} from '@/tools/dag/engine/state-io';
 import {getDagStateDir, readNodePrompt} from '@/tools/dag/path-utils';
+import {enqueueDagPrompt} from '@/tools/dag/prompt-queue';
 import type {NanocoderToolExport} from '@/types/core';
 import {jsonSchema, tool} from '@/types/core';
 
@@ -113,16 +114,14 @@ const executeNextStep = async (args: {next?: string}): Promise<string> => {
 	const {metadata} = readDagV3(state.plan_path);
 	const isFromEntryNode = node.id === metadata.entry_node_id;
 
-	let result = '';
-	if (!isFromEntryNode) result += `You have just completed "${node.id}". `;
-
 	const nextNodePrompt = readNodePrompt(nextNode, state);
 	if (nextNodePrompt) {
-		result += nextNodePrompt;
-	} else {
-		result += `Please wait for your next task.`;
+		enqueueDagPrompt(nextNodePrompt);
 	}
 
+	let result = '';
+	if (!isFromEntryNode) result += `Completed "${node.id}". `;
+	result += `Advancing to node "${nextId}".`;
 	return result;
 };
 

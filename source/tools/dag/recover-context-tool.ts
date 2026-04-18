@@ -60,16 +60,16 @@ const executeRecoverContext = async (
 	return result;
 };
 
-export const recoverContextTool: NanocoderToolExport = {
-	name: 'recover_context',
-	tool: tool({
-		description:
-			'Recover DAG session context after autocompaction or context loss. Returns current node, completed work, and decisions made. Also detects and reports any divergence between session state and DAG structure.',
-		inputSchema: jsonSchema<Record<string, never>>({
-			type: 'object',
-			properties: {},
-		}),
-		needsApproval: false,
-		execute: async args => executeRecoverContext(args),
-	}),
-};
+// export const recoverContextTool: NanocoderToolExport = {
+// 	name: 'recover_context',
+// 	tool: tool({
+// 		description:
+// 			'Recover DAG session context after autocompaction or context loss. Returns current node, completed work, and decisions made. Also detects and reports any divergence between session state and DAG structure.',
+// 		inputSchema: jsonSchema<Record<string, never>>({
+// 			type: 'object',
+// 			properties: {},
+// 		}),
+// 		needsApproval: false,
+// 		execute: async args => executeRecoverContext(args),
+// 	}),
+// };

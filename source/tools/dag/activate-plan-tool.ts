@@ -3,6 +3,7 @@ import * as path from 'path';
 import {recompilePlan} from '@/tools/dag/engine/compiler';
 import {now, writeState} from '@/tools/dag/engine/state-io';
 import {getDagStateDir, readNodePrompt} from '@/tools/dag/path-utils';
+import {enqueueDagPrompt} from '@/tools/dag/prompt-queue';
 import type {DagSessionState} from '@/tools/dag/types';
 import type {NanocoderToolExport} from '@/types/core';
 import {jsonSchema, tool} from '@/types/core';
@@ -52,7 +53,8 @@ const executeActivatePlan = async (args: {
 	}
 
 	const entryPrompt = readNodePrompt(entryNode, state);
-	return entryPrompt ?? 'Plan execution has begun. Wait for your next step.';
+	if (entryPrompt) enqueueDagPrompt(entryPrompt);
+	return `Plan "${plan_name}" activated.`;
 };
 
 export const activatePlanTool: NanocoderToolExport = {

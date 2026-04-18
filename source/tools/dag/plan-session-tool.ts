@@ -9,6 +9,7 @@ import {
 	getPlanDir,
 	readNodePrompt,
 } from '@/tools/dag/path-utils';
+import {enqueueDagPrompt} from '@/tools/dag/prompt-queue';
 import type {DagSessionState} from '@/tools/dag/types';
 import type {NanocoderToolExport} from '@/types/core';
 import {jsonSchema, tool} from '@/types/core';
@@ -115,7 +116,8 @@ const executePlanSession = async (
 	}
 
 	const entryPrompt = readNodePrompt(entryNode, state);
-	return entryPrompt ?? 'Planning session has begun. Wait for your next step.';
+	if (entryPrompt) enqueueDagPrompt(entryPrompt);
+	return 'Planning session started.';
 };
 
 export const planSessionTool: NanocoderToolExport = {
