@@ -125,3 +125,4 @@ benchmarks/report.json
 benchmarks/explain.json
 benchmarks/.module-*
 .github/issues/docs
+/.worktrees
