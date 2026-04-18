@@ -19,7 +19,7 @@ description = <3-5 word description of the task>
 
 ## Prepare Delegation Protocol
 
-1. Call `qdrant_qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve verified code facts, API shapes, behavioral findings, and documentation conventions from prior steps.
+1. Call `qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve verified code facts, API shapes, behavioral findings, and documentation conventions from prior steps.
 2. Draft a prompt for documentation-expert that includes: the documentation goal, verified technical facts it must use as source-of-truth, documentation conventions to follow, and what to report back.
 3. Include web search instructions verbatim: "Use web search tools as you work, e.g. API docs, build system integration, best practices, headers, user guides, etc. Never assume prior knowledge or provided context is enough. Verify everything."
 
@@ -39,7 +39,7 @@ If `gate_passed` is false, revise before delegating. Once it passes, call the `a
 
 ## Note Taking
 
-Categorize the report into distinct notes. Call `qdrant_qdrant-store` with `collection_name={{PLAN_NAME}}` once per note.
+Categorize the report into distinct notes. Call `qdrant-store` with `collection_name={{PLAN_NAME}}` once per note.
 
 At minimum, capture: what was written, files changed, any decisions or assumptions that downstream steps should know about.
 

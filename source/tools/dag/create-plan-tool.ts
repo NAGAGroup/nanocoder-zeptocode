@@ -161,7 +161,7 @@ This plan defines the sequential, verifiable lifecycle for processing each node 
 *   **Assumption:** The provided Node Prompt is always the definitive instruction set for the current task.
 *   **Assumption:** The DAG structure is trusted and sequential; no work ahead is permitted.
 *   **Principle:** The agent is an Orchestrator, not a specialist. All specialized work must be delegated.
-*   **Memory Requirement:** Context persistence relies exclusively on Qdrant (\`qdrant_qdrant-find\` and \`qdrant_qdrant-store\`).
+*   **Memory Requirement:** Context persistence relies exclusively on Qdrant (\`qdrant-find\` and \`qdrant-store\`).
 
 ## 🛣️ Milestones and Stages
 
@@ -173,7 +173,7 @@ This plan defines the sequential, verifiable lifecycle for processing each node 
         *   \`node_goal\`: Restatement of the current node's objective.
         *   \`prior_context_retrieved\`: Summary of findings from Qdrant.
         *   \`approach\`: Detailed, ordered plan for executing the node's instructions.
-    3.  **Context Retrieval:** Execute \`qdrant_qdrant-find\`, using the Plan Name and targeted queries derived from the Node Prompt and previous execution summaries, to ensure context awareness.
+    3.  **Context Retrieval:** Execute \`qdrant-find\`, using the Plan Name and targeted queries derived from the Node Prompt and previous execution summaries, to ensure context awareness.
     4.  **Context Review:** Internally process the retrieved findings to inform the execution phase.
 *   **Input (I/O):** Current Node Prompt.
 *   **Output (I/O):** Preflight TOML block; Retrieved Qdrant Context Data.
@@ -187,7 +187,7 @@ This plan defines the sequential, verifiable lifecycle for processing each node 
     3.  **Tool Handling:** If a tool is required:
         *   Check for \`[BLOCKED]\` error message. If received, immediately call the named required tool.
         *   If a tool fails, read the error message, diagnose the failure, correct the tool call parameters, and retry (do not give up).
-    4.  **Context Loss Recovery:** If positional context is lost, immediately call \`recover_context\`, followed by targeted \`qdrant_qdrant-find\` calls to re-establish working understanding.
+    4.  **Context Loss Recovery:** If positional context is lost, immediately call \`recover_context\`, followed by targeted \`qdrant-find\` calls to re-establish working understanding.
     5.  **Finding Capture:** After any significant discovery, decision, or delegation outcome (regardless of task completion status), capture the finding as self-contained prose.
 *   **Input (I/O):** Node Instructions + Retrieved Context.
 *   **Output (I/O):** Task Execution Result / Subagent Response.
@@ -196,7 +196,7 @@ This plan defines the sequential, verifiable lifecycle for processing each node 
 ### Stage 3: Persistence and Transition
 *   **Goal:** Durable storage of all findings and controlled transition to the next node.
 *   **Procedure:**
-    1.  **Store Findings:** For every self-contained finding captured in Stage 2, execute \`qdrant_qdrant-store\` using the Plan Name as the Collection Name. (One call per finding).
+    1.  **Store Findings:** For every self-contained finding captured in Stage 2, execute \`qdrant-store\` using the Plan Name as the Collection Name. (One call per finding).
     2.  **Transition:** Immediately call \`next_step\` to proceed to the subsequent node in the DAG.
     3.  **Verification:** Confirm the successful initiation of the transition command.
 *   **Input (I/O):** Captured Findings; Execution Result.
@@ -211,7 +211,7 @@ This plan defines the sequential, verifiable lifecycle for processing each node 
 | **Context Drift / Memory Loss** | Task execution fails due to missing constraints, or agent loses track of its position in the DAG. | Trigger Stage 2, Step 4 (Context Loss Recovery). Execute \`recover_context\` immediately. Re-establish state. |
 | **Delegation Failure** | Subagent provides a vague or insufficient result that violates a critical constraint. | Do not accept the result. Re-examine the Node Prompt constraints. If failure is recurrent, adjust the prompt to be more prescriptive, per the Delegation Philosophy guidelines. |
 | **Tool Failure/Misuse** | Tool call fails, or the agent attempts to call a tool before it has been unlocked. | **Failure:** Read error. Correct call parameters and retry (Stage 2). **Blocked:** Read \`[BLOCKED]\` message. Immediately call the required tool without explanation (Stage 2). |
-| **Non-Persistence** | Findings are generated during execution but are not stored before the transition. | Intercept the transition to Stage 3. Force immediate execution of \`qdrant_qdrant-store\` for all outstanding findings before calling \`next_step\`. |
+| **Non-Persistence** | Findings are generated during execution but are not stored before the transition. | Intercept the transition to Stage 3. Force immediate execution of \`qdrant-store\` for all outstanding findings before calling \`next_step\`. |
 `;
 
 export const getPlanFollowingGuideTool: NanocoderToolExport = {

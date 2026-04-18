@@ -18,7 +18,7 @@ description = <3-5 word description of the task>
 
 ## Prepare Delegation Protocol
 
-1. Call `qdrant_qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve any environment constraints, known dependency versions, or prior failed attempts that affect how these steps should run.
+1. Call `qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve any environment constraints, known dependency versions, or prior failed attempts that affect how these steps should run.
 2. Draft a prompt for junior-dev that includes: the setup steps to execute, relevant constraints from context retrieval, and what to report back per step.
 3. Include web search instructions verbatim: "Use web search tools as you work, e.g. API docs, build system integration, best practices, headers, user guides, etc. Never assume prior knowledge or provided context is enough. Verify everything."
 
@@ -37,7 +37,7 @@ If `gate_passed` is false, revise before delegating. Once it passes, call the `a
 
 ## Note Taking
 
-Call `qdrant_qdrant-store` with `collection_name={{PLAN_NAME}}`.
+Call `qdrant-store` with `collection_name={{PLAN_NAME}}`.
 
 At minimum, capture: each setup step and whether it succeeded or failed, any output relevant to subsequent steps.
 

@@ -21,7 +21,7 @@ description = <3-5 word description of the task>
 
 ## Prepare Delegation Protocol
 
-1. Call `qdrant_qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve the triage root cause, prior fix attempts, verification failure output, and any code conventions relevant to the fix.
+1. Call `qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve the triage root cause, prior fix attempts, verification failure output, and any code conventions relevant to the fix.
 2. Draft a prompt for junior-dev that includes: the fix goal, the root cause to address, what prior attempts already tried (so it doesn't repeat them), relevant conventions, and what to report back.
 3. Include instructions to perform web search as they work, if specified. They *can* perform their own web search, instructions to perform web search are valid. Do not exclude web search instructions. Instructions to include, *verbatim* and *nothing more/nothing less*: "Use web search tools as you work, e.g. API docs, build system integration, best practices, headers, user guides, etc. Never assume prior knowledge or provided context is enough. Verify everything."
 4. Do not, under any circumstances, modify the web search instructions above if they are to be included.
@@ -42,7 +42,7 @@ If `gate_passed` is false, revise before delegating. Once it passes, call the `a
 
 ## Note Taking
 
-Categorize the report into distinct notes. Call `qdrant_qdrant-store` with `collection_name={{PLAN_NAME}}` once per note.
+Categorize the report into distinct notes. Call `qdrant-store` with `collection_name={{PLAN_NAME}}` once per note.
 
 At minimum, capture: what was fixed, what files were changed, how the root cause was addressed.
 

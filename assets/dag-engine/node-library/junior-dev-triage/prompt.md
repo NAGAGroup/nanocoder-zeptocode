@@ -22,7 +22,7 @@ description = <3-5 word description of the task>
 
 ## Prepare Delegation Protocol
 
-1. Call `qdrant_qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve the verbatim verification failure output, exact failed commands, and any prior triage findings from earlier retry cycles.
+1. Call `qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve the verbatim verification failure output, exact failed commands, and any prior triage findings from earlier retry cycles.
 2. Draft a prompt for junior-dev that includes: the original goal, the exact failed commands and error output to reproduce, prior triage attempts to avoid repeating, what to fix and report back (root cause, changes made, files touched).
 3. Include web search instructions verbatim: "Use web search tools as you work, e.g. API docs, build system integration, best practices, headers, user guides, etc. Never assume prior knowledge or provided context is enough. Verify everything."
 
@@ -42,7 +42,7 @@ If `gate_passed` is false, revise before delegating. Once it passes, call the `a
 
 ## Note Taking
 
-Categorize the report into distinct notes. Call `qdrant_qdrant-store` with `collection_name={{PLAN_NAME}}` once per note.
+Categorize the report into distinct notes. Call `qdrant-store` with `collection_name={{PLAN_NAME}}` once per note.
 
 At minimum, capture: root cause identified, fix applied, files changed.
 

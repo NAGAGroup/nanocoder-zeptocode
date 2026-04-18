@@ -18,10 +18,10 @@ desired_outcomes = <what must be established by the end of this discussion in or
 
 ## Discuss and Capture
 
-1. Call `qdrant_qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve prior findings relevant to this topic.
+1. Call `qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve prior findings relevant to this topic.
 2. Use the `ask_user` tool to open the discussion. Surface relevant prior findings before your first question.
 3. Continue with the `ask_user` tool until `desired_outcomes` are resolved.
-4. For each key outcome or decision, call `qdrant_qdrant-store` with `collection_name={{PLAN_NAME}}`.
+4. For each key outcome or decision, call `qdrant-store` with `collection_name={{PLAN_NAME}}`.
 
 ## Gate
 

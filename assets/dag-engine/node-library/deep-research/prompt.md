@@ -18,7 +18,7 @@ description = <3-5 word description of the task>
 
 ## Prepare Delegation Protocol
 
-1. Call `qdrant_qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve what is already known about this topic and why deep research was flagged as necessary.
+1. Call `qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve what is already known about this topic and why deep research was flagged as necessary.
 2. Draft a prompt for deep-researcher that includes: the research topic, prior context to build on, project constraints, and reporting requirements — deep-researcher must always surface contradictions and confidence levels.
 
 ## Delegation Gate
@@ -36,7 +36,7 @@ If `gate_passed` is false, revise before delegating. Once it passes, call the `a
 
 ## Note Taking
 
-Categorize the report into distinct notes — one per finding area or contradiction. Call `qdrant_qdrant-store` with `collection_name={{PLAN_NAME}}` once per note.
+Categorize the report into distinct notes — one per finding area or contradiction. Call `qdrant-store` with `collection_name={{PLAN_NAME}}` once per note.
 
 At minimum, capture: findings per topic with confidence tags, contradictions surfaced, unknowns that remain unresolved.
 

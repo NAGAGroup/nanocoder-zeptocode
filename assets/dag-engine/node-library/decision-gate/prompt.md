@@ -10,7 +10,7 @@
 
 ## Retrieve Evidence and Decide
 
-1. Call `qdrant_qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, targeting evidence relevant to the decision question above.
+1. Call `qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, targeting evidence relevant to the decision question above.
 2. Call `get_branch_options` to retrieve the available branch node IDs.
 3. Evaluate the retrieved evidence against the decision question and select the branch it supports.
 

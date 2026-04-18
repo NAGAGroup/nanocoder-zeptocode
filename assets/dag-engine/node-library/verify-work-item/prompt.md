@@ -20,7 +20,7 @@ description = <3-5 word description of the task>
 
 ## Prepare Delegation Protocol
 
-1. Call `qdrant_qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve the implementation summary, files changed, and any prior verification failure output from earlier cycles.
+1. Call `qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve the implementation summary, files changed, and any prior verification failure output from earlier cycles.
 2. Draft a prompt for tailwrench that includes: what was implemented (from notes), the success criteria to verify against, any prior failures to avoid re-running the same failing commands, and what to report back (commands run, full output, pass/fail verdict, and on failure — exact error output and which criteria failed).
 
 ## Delegation Gate
@@ -38,7 +38,7 @@ If `gate_passed` is false, revise before delegating. Once it passes, call the `a
 
 ## Note Taking
 
-Call `qdrant_qdrant-store` with `collection_name={{PLAN_NAME}}`.
+Call `qdrant-store` with `collection_name={{PLAN_NAME}}`.
 
 At minimum, capture: verdict (pass/fail), commands run, and on failure — exact error output and which criteria failed.
 

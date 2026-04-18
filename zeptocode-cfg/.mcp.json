@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "context7": {
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "enabled": true
+    },
+    "qdrant": {
+      "transport": "stdio",
+      "command": "uvx",
+      "args": ["mcp-server-qdrant"],
+      "env": {
+        "QDRANT_URL": "http://localhost:6333",
+        "EMBEDDING_MODEL": "sentence-transformers/all-MiniLM-L6-v2"
+      },
+      "enabled": true
+    },
+    "searxng": {
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "mcp-searxng"],
+      "env": {
+        "SEARXNG_URL": "http://localhost:8080"
+      },
+      "enabled": true
+    }
+  }
+}
+

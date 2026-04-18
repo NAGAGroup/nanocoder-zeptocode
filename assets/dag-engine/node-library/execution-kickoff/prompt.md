@@ -13,8 +13,8 @@ In this session you execute the plan, not re-derive it.
 ## Preflight Checklist
 
 1. Call `present_plan_diagram` with `{{PLAN_NAME}}` to see the full execution plan.
-2. Call `qdrant_qdrant-find` using `collection_name={{PLAN_NAME}}` and query "user request and goal".
-3. Call `qdrant_qdrant-find` using `collection_name={{PLAN_NAME}}` using 5-7 varied queries to retrieve the full planning context — research findings, decisions made, architectural constraints, and any other context relevant to execution.
+2. Call `qdrant-find` using `collection_name={{PLAN_NAME}}` and query "user request and goal".
+3. Call `qdrant-find` using `collection_name={{PLAN_NAME}}` using 5-7 varied queries to retrieve the full planning context — research findings, decisions made, architectural constraints, and any other context relevant to execution.
 
 ```toml
 [preflight]
@@ -26,7 +26,7 @@ plan_summary = <briefly describe the shape of the plan — how many phases, any 
 
 ## Execution Initialization Protocol
 
-1. Call `qdrant_qdrant-store` with `collection_name={{PLAN_NAME}}` and store a note summarizing the execution session start — the user's goal, constraints, and any key context that all subsequent steps should be aware of. Prefix with "[EXECUTION CONTEXT]: "
+1. Call `qdrant-store` with `collection_name={{PLAN_NAME}}` and store a note summarizing the execution session start — the user's goal, constraints, and any key context that all subsequent steps should be aware of. Prefix with "[EXECUTION CONTEXT]: "
 
 ## Gate
 

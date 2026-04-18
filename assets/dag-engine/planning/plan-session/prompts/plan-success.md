@@ -1,8 +1,10 @@
-# Plan Creation Successful!
+# Plan Creation Successful
 
-## What to do next
+Execute the final steps of the planning session in order:
 
-1. Before summarizing the planning session, what was created and why, call `qdrant_qdrant-store` using `collection_name={{PLAN_NAME}}` to store core planning decisions and reasoning. Make the calls count, this provides context to the executing agent!
-2. Now, summarize the planning session to the user, what was created and why. Call `present_plan_diagram` with `plan_name={{PLAN_NAME}}` to give the user a visual understanding of plan flow.
-3. Use the `ask_user` tool to present two options: activate now or defer to later.
-4. If the user wants to activate now, call `activate_plan` for `{{PLAN_NAME}}`. This will immediately enter the execution of the DAG you just created! Otherwise call `next_step`, which will exit the planning session and allow the user to proceed as they wish.
+1. **Store context:** Call `qdrant-store` with `collection_name={{PLAN_NAME}}` to persist core planning decisions, rationale, and reasoning. Make the calls count — this is the context the executing agent will rely on.
+2. **Summarize and present:** Summarize the planning session to the user — what was created and why. Then call `present_plan_diagram` with `plan_name={{PLAN_NAME}}` to give the user a visual of the plan flow.
+3. **User decision:** Use the `question` tool to present two options: activate now or defer to later.
+4. **Execute the choice:**
+   - Activate: call `activate_plan` with `{{PLAN_NAME}}` — this immediately begins DAG execution.
+   - Defer: call `next_step` to exit the planning session.

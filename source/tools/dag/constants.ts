@@ -17,8 +17,8 @@ export const DAG_ASSET_ROOT = path.resolve(
 // Tools that bypass DAG blocking regardless of current node's enforcement sequence.
 export const exemptTools = [
 	'ask_user',
-	'qdrant_qdrant-store',
-	'qdrant_qdrant-find',
+	'qdrant-store',
+	'qdrant-find',
 	'recover_context',
 	'next_step',
 	'exit_plan',

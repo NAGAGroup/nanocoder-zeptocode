@@ -1,20 +1,19 @@
 **Plan Name:** {{PLAN_NAME}}
-**Required Skills:** None
-**Required Tools:** qdrant_qdrant-store
-**Optional Tools:** None
-**Questions Allowed?:** No
+**Required Tools:** qdrant-store
 
-<goal>
-Persist all significant findings, unknowns, and constraints from the investigation phases to semantic notes.
-</goal>
+**Objective:** Persist all critical, non-procedural findings from the investigation phases as semantic notes in `collection_name={{PLAN_NAME}}`.
 
-<rules>
-Always cover: user's goal and scope, scout findings, research outcomes, unresolved unknowns, and constraints affecting plan design.
-Always write each note as self-contained prose.
-Never store procedural details — only things that shape plan structure.
-</rules>
+**What to cover:**
+- **Findings:** Definitive conclusions from research and scouting, with relevance to the plan goal.
+- **Unknowns:** Unresolved questions or gaps that impede planning and require future investigation.
+- **Constraints:** External or internal limitations that restrict the viable design space of the plan.
+- **Goal scope:** How the user's goal and scope were refined during investigation.
 
-<instructions>
-1. Call qdrant_qdrant-store once for each finding and unknown.
-2. Call next_step.
-</instructions>
+**Note standards:**
+- Each note must be self-contained prose — a future agent reading only that note must fully understand it without access to the full investigation log.
+- Notes describe *what* was discovered and *what* it implies for plan structure.
+- Never store procedural details, command sequences, or execution logs.
+
+**Instructions:**
+1. For each distinct finding, unknown, or constraint: call `qdrant-store` with `collection_name={{PLAN_NAME}}`. One call per note.
+2. Call `next_step`.

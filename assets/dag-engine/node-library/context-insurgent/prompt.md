@@ -19,7 +19,7 @@ description = <3-5 word description of the task>
 
 ## Prepare Delegation Protocol
 
-1. Call `qdrant_qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve prior survey findings, planning context, and anything that scopes or motivates this analysis.
+1. Call `qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve prior survey findings, planning context, and anything that scopes or motivates this analysis.
 2. Draft a prompt for context-insurgent that includes: the specific questions to answer, any prior findings context-insurgent should build on (not re-derive), and clear reporting requirements.
 
 ## Delegation Gate
@@ -37,7 +37,7 @@ If `gate_passed` is false, revise before delegating. Once it passes, call the `a
 
 ## Note Taking
 
-Categorize the report into distinct notes. Call `qdrant_qdrant-store` with `collection_name={{PLAN_NAME}}` once per note.
+Categorize the report into distinct notes. Call `qdrant-store` with `collection_name={{PLAN_NAME}}` once per note.
 
 At minimum, capture: mechanism explained with files and symbols, call graph summary, unresolved gaps.
 

@@ -11,7 +11,7 @@
 
 ## Prepare Delegation
 
-1. Call `qdrant_qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve the implementation summary, files changed, and the goal this work implemented.
+1. Call `qdrant-find` with `collection_name={{PLAN_NAME}}`, as needed, to retrieve the implementation summary, files changed, and the goal this work implemented.
 2. Draft a prompt for tailwrench that includes: the specific files to stage (by name), a commit message reflecting what was done and why, and the constraint that only those files should be staged.
 
 ## Delegation Gate
@@ -29,7 +29,7 @@ If `gate_passed` is false, revise before delegating. Once it passes, call the `a
 
 ## Note Taking
 
-Call `qdrant_qdrant-store` with `collection_name={{PLAN_NAME}}`.
+Call `qdrant-store` with `collection_name={{PLAN_NAME}}`.
 
 At minimum, capture: whether the commit succeeded, the commit message used, the files staged.
 
