@@ -1,13 +1,12 @@
 ---
 name: tailwrench
 description: "Verification runner. Runs build, test, and check commands against success criteria and reports pass/fail. Cannot edit any files."
-color: "#f97316"
-mode: subagent
-permission:
-    "*": deny
-    bash: allow
-    read: allow
-    grep: allow
+model: inherit
+tools:
+  - execute_bash
+  - read_file
+  - search_file_contents
+  - find_files
 ---
 # Role: tailwrench
 

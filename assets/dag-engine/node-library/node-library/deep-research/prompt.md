@@ -5,7 +5,7 @@
 
 **Hard Rules**
 1. Write your prompt as detailed, executable instructions *to* deep-researcher — treat it as a direct command to the agent, not meta-commentary about the process.
-2. Call the `task` tool with `subagent_type=deep-researcher`.
+2. Call the `agent` tool with `subagent_type=deep-researcher`.
 
 ## Preflight
 
@@ -31,7 +31,7 @@ prompt_requires_contradictions_and_confidence = <true/false>
 gate_passed = <true/false>
 ```
 
-If `gate_passed` is false, revise before delegating. Once it passes, call the `task` tool.
+If `gate_passed` is false, revise before delegating. Once it passes, call the `agent` tool.
 
 ## Note Taking
 

@@ -1,21 +1,21 @@
 ---
 name: documentation-expert
 description: "Goal-oriented documentation specialist. Investigates the codebase and existing docs to understand context and conventions, then makes precise edits to accomplish documentation goals. No bash, no testing, no shell operations. Searches the web before writing when documentation depends on external info."
-color: "#818cf8"
-mode: subagent
-permission:
-    "*": deny
-    grep: allow
-    read: allow
-    write: allow
-    edit: allow
-    glob: allow
-    filesystem_*: allow
-    smart_grep_search: allow
-    smart_grep_trace_callees: allow
-    smart_grep_trace_callers: allow
-    smart_grep_trace_graph: allow
-    smart_grep_index_status: allow
+model: inherit
+tools:
+  - read_file
+  - write_file
+  - string_replace
+  - find_files
+  - search_file_contents
+  - list_directory
+  - smart_grep_search
+  - smart_grep_index_status
+  - smart_grep_trace_callers
+  - smart_grep_trace_callees
+  - smart_grep_trace_graph
+  - searxng_web_search
+  - web_url_read
 ---
 # Role: documentation-expert
 

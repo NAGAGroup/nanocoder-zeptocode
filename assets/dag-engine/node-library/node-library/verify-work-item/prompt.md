@@ -12,7 +12,7 @@ Tailwrench is restricted to command execution and output reading — it cannot e
 
 2. **Prompt Drafting:** Construct a prompt *to* tailwrench that includes: what was implemented (from notes), the success criteria (`{{VERIFY_DESCRIPTION}}`), prior failed commands to avoid repeating, and the required return format: commands run, full output, pass/fail verdict, and on failure — exact error output and which criteria failed.
 
-3. **Delegation Gate:** Before calling `task`, verify: prompt addresses tailwrench directly, retrieved context is included, success criteria are stated, return format is specified. Revise if any check fails, then call `task` with `subagent_type=tailwrench`.
+3. **Delegation Gate:** Before calling `agent`, verify: prompt addresses tailwrench directly, retrieved context is included, success criteria are stated, return format is specified. Revise if any check fails, then call `agent` with `subagent_type=tailwrench`.
 
 4. **Note Taking:** Call `qdrant-store` with `collection_name={{PLAN_NAME}}`. At minimum capture: verdict (pass/fail), commands run, and on failure — exact error output and which criteria failed. Store missing details if needed.
 

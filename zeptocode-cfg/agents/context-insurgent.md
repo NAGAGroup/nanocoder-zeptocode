@@ -1,14 +1,17 @@
 ---
 name: context-insurgent
 description: "Deep project search and analysis. Answers precise questions about how code works."
-color: "#f59e0b"
-mode: subagent
-permission:
-    "*": deny
-    grep: allow
-    read: allow
-    glob: allow
-    smart_grep_*: allow
+model: inherit
+tools:
+  - read_file
+  - find_files
+  - search_file_contents
+  - list_directory
+  - smart_grep_search
+  - smart_grep_index_status
+  - smart_grep_trace_callers
+  - smart_grep_trace_callees
+  - smart_grep_trace_graph
 ---
 # Role: context-insurgent
 

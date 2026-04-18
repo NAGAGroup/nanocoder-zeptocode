@@ -1,14 +1,12 @@
 ---
 name: external-scout
 description: "Research subagent. Searches external sources and reports findings with confidence levels."
-color: "#f43f5e"
-mode: subagent
-permission:
-    "*": deny
-    searxng_web_search: allow
-    web_url_read: allow
-    context7_resolve-library-id: allow
-    context7_query-docs: allow
+model: inherit
+tools:
+  - searxng_web_search
+  - web_url_read
+  - resolve-library-id
+  - query-docs
 ---
 # Role: external-scout
 

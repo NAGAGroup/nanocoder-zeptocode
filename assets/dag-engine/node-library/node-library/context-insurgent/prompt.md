@@ -5,7 +5,7 @@
 
 **Hard Rules**
 1. Output must be framed strictly as instructions directed *to* context-insurgent — not commentary about it.
-2. Call the `task` tool with `subagent_type=context-insurgent`.
+2. Call the `agent` tool with `subagent_type=context-insurgent`.
 3. Context-insurgent is limited to project source files only — do not ask it to search the web or reference external knowledge.
 
 ## Preflight
@@ -32,7 +32,7 @@ prompt_stays_within_project_source = <true/false>
 gate_passed = <true/false>
 ```
 
-If `gate_passed` is false, revise before delegating. Once it passes, call the `task` tool.
+If `gate_passed` is false, revise before delegating. Once it passes, call the `agent` tool.
 
 ## Note Taking
 

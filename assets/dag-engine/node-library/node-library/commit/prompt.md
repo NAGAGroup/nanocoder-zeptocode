@@ -5,7 +5,7 @@
 
 **Hard Rules**
 1. Write your prompt as direct instructions *to* tailwrench — not commentary about it.
-2. Call the `task` tool with `subagent_type=tailwrench`.
+2. Call the `agent` tool with `subagent_type=tailwrench`.
 3. Stage only the specific files changed in this work phase — never all changed files indiscriminately.
 
 **Execution Steps:**
@@ -14,7 +14,7 @@
 
 2. **Prompt Drafting:** Draft a prompt *to* tailwrench that includes: the exact file names to stage (by name, not "stage all"), a commit message detailing what was done and why, and an explicit constraint that only those files are staged.
 
-3. **Delegation Gate:** Before calling `task`, verify: prompt addresses tailwrench directly, retrieved context is integrated, return format is specified, specific files are named (not "stage all"). Revise if any check fails, then call `task` with `subagent_type=tailwrench`.
+3. **Delegation Gate:** Before calling `agent`, verify: prompt addresses tailwrench directly, retrieved context is integrated, return format is specified, specific files are named (not "stage all"). Revise if any check fails, then call `agent` with `subagent_type=tailwrench`.
 
 4. **Note Taking:** Call `qdrant-store` with `collection_name={{PLAN_NAME}}`. At minimum capture: commit success/failure, the commit message used, files staged. Correct missing notes before proceeding.
 

@@ -1,6 +1,6 @@
 # External Research
 
-Delegate an external-scout subagent using the `task` tool to perform web search to inform planning decisions.
+Delegate an external-scout subagent using the `agent` tool to perform web search to inform planning decisions.
 
 Do not use this step to solve execution-phase problems. Scope is restricted to surveying the landscape of options and approaches that will be decided on during plan execution — not specific implementation details or API docs.
 
@@ -14,9 +14,9 @@ Do not use this step to solve execution-phase problems. Scope is restricted to s
 
 1. **Preflight:** Use `qdrant-find` with `collection_name={{PLAN_NAME}}` to retrieve the user's goal, constraints, and orientation findings from prior steps. Determine what to query based on what's useful to inform the delegation. Assess whether external research is actually needed to inform planning decisions.
 
-2. **If research is not needed:** Confirm with the user first. Then call `task` instructing external-scout that no research is needed and it can return immediately.
+2. **If research is not needed:** Confirm with the user first. Then call `agent` instructing external-scout that no research is needed and it can return immediately.
 
-3. **If research is needed:** Construct a structured prompt for external-scout that defines: the research questions and topics, what prior steps already established (so external-scout fills gaps, not duplicates), project constraints the research must account for, and reporting requirements. Call `task` with `subagent_type=external-scout`, the structured `prompt`, and a `description`.
+3. **If research is needed:** Construct a structured prompt for external-scout that defines: the research questions and topics, what prior steps already established (so external-scout fills gaps, not duplicates), project constraints the research must account for, and reporting requirements. Call `agent` with `subagent_type=external-scout`, the structured `prompt`, and a `description`.
 
 4. **Note Taking:** Categorize the report into distinct notes. Call `qdrant-store` for each distinct note using `collection_name={{PLAN_NAME}}`. Do not store as a monolithic note — it makes discoverability harder.
 

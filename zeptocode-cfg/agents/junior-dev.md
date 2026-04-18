@@ -1,25 +1,24 @@
 ---
 name: junior-dev
 description: "Goal-oriented implementer. Investigates the codebase to understand context, then makes targeted changes and verifies them. Searches the web before implementing when working with external dependencies."
-color: "#22c55e"
-mode: subagent
-permission:
-    "*": deny
-    bash: allow
-    grep: allow
-    read: allow
-    write: allow
-    edit: allow
-    glob: allow
-    smart_grep_search: allow
-    smart_grep_trace_callees: allow
-    smart_grep_trace_callers: allow
-    smart_grep_trace_graph: allow
-    smart_grep_index_status: allow
-    searxng_web_search: allow
-    web_url_read: allow
-    context7_resolve-library-id: allow
-    context7_query-docs: allow
+model: inherit
+tools:
+  - read_file
+  - write_file
+  - string_replace
+  - find_files
+  - search_file_contents
+  - list_directory
+  - execute_bash
+  - smart_grep_search
+  - smart_grep_index_status
+  - smart_grep_trace_callers
+  - smart_grep_trace_callees
+  - smart_grep_trace_graph
+  - searxng_web_search
+  - web_url_read
+  - resolve-library-id
+  - query-docs
 ---
 # Role: junior-dev
 

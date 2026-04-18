@@ -1,15 +1,14 @@
 ---
 name: context-scout
 description: "Read-only explorer. Surveys available materials and reports findings in clear prose."
-color: "#06b6d4"
-mode: subagent
-permission:
-    "*": deny
-    smart_grep_search: allow
-    smart_grep_index_status: allow
-    read: allow
-    glob: allow
-    read: allow
+model: inherit
+tools:
+  - read_file
+  - find_files
+  - search_file_contents
+  - list_directory
+  - smart_grep_search
+  - smart_grep_index_status
 ---
 # Role: context-scout
 
